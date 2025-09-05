@@ -24,8 +24,6 @@ return new class extends Migration
             $table->string('kontak')->nullable();
             $table->enum('status-operasi', [0, 1])->default(1);
             $table->string('koordinat')->nullable();
-            $table->integer('total-pedagang');
-            $table->integer('sampel-pedagang');
             $table->string('nama-pemeriksa');
             $table->string('instansi-pemeriksa');
             $table->date('tanggal-penilaian');

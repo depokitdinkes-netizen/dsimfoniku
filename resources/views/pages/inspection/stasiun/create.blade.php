@@ -62,6 +62,13 @@
                 </div>
                 @break
 
+                @case('kontak')
+                <div class="input-group">
+                    <label for="{{ $form_input['name'] }}">{{ $form_input['label'] }}</label>
+                    <input type="text" id="{{ $form_input['name'] }}" name="{{ $form_input['name'] }}" pattern="[0-9]*" inputmode="numeric" oninput="this.value = this.value.replace(/[^0-9]/g, '')" required />
+                </div>
+                @break
+
                 @default
                 <div class="input-group">
                     <label for="{{ $form_input['name'] }}">{{ $form_input['label'] }}</label>

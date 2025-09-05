@@ -15,12 +15,11 @@ return new class extends Migration
             $table->id();
             $table->foreignId('user_id')->constrained()->cascadeOnDelete();
             $table->string('subjek'); // Nama Stasiun
-            $table->string('jenis_stasiun'); // Jenis Stasiun
             $table->string('pengelola'); // Pengelola/Kepala Stasiun
             $table->string('alamat');
             $table->string('kelurahan');
             $table->string('kecamatan');
-            $table->string('kontak');
+            $table->string('kontak'); // Nomor kontak (hanya angka)
             $table->enum('status-operasi', [0, 1]);
             $table->string('koordinat');
             $table->string('nama-pemeriksa');
@@ -31,11 +30,6 @@ return new class extends Migration
             $table->text('rencana-tindak-lanjut')->nullable();
             $table->timestamps();
             $table->softDeletes();
-
-            // Informasi spesifik
-            $table->integer('u004'); // Jumlah Penumpang Harian
-            $table->integer('u005'); // Jumlah Karyawan
-            $table->string('u006')->nullable(); // Nomor Identitas Stasiun
 
             // Form Penilaian Air
             $table->enum('a001', [0, 1]); // Tersedia air minum yang cukup untuk semua keperluan

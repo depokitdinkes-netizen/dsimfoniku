@@ -134,10 +134,7 @@ class StasiunController extends Controller
                         ['Alamat', $item['alamat']],
                         ['Kelurahan', $item['kelurahan']],
                         ['Kecamatan', $item['kecamatan']],
-                        ['Skor', Export::score($item['skor'], Export::TUJUH_PULUH)],
-                        ['Jumlah Penumpang Harian', $item['u004']],
-                        ['Jumlah Karyawan', $item['u005']],
-                        ['Nomor Identitas Stasiun', $item['u006']]
+                        ['Skor', Export::score($item['skor'], Export::TUJUH_PULUH)]
                     ],
                     'catatan' => $item['catatan-lain'],
                     'rencana' => $item['rencana-tindak-lanjut'],
@@ -196,6 +193,7 @@ class StasiunController extends Controller
                 'alamat' => 'required|string',
                 'kecamatan' => 'required|string|max:255',
                 'kelurahan' => 'required|string|max:255',
+                'kontak' => 'required|numeric',
                 'status-operasi' => 'required|boolean',
             ]);
 
@@ -296,6 +294,7 @@ class StasiunController extends Controller
                 'alamat' => 'required|string',
                 'kecamatan' => 'required|string|max:255',
                 'kelurahan' => 'required|string|max:255',
+                'kontak' => 'required|numeric',
                 'status-operasi' => 'required|boolean',
             ]);
             

@@ -465,7 +465,7 @@ class RenangPemandianController extends Controller
             ]);
 
             $data = $request->all();
-            $data['skor'] = (int) ((int) (array_reduce($this->formPenilaianName(), fn($carry, $column) => $carry + $request->input($column), 0) / 58 * 100));
+            $data['skor'] = (int) ((int) (array_reduce($this->formPenilaianName(), fn($carry, $column) => $carry + $request->input($column), 0) / 100 * 100));
 
             if ($data['action'] == 'duplicate') {
                 // Add user_id for duplicate action

@@ -24,8 +24,6 @@ return new class extends Migration
             $table->string('koordinat')->nullable();
             $table->integer('jumlah_total_pedagang')->nullable();
             $table->integer('jumlah_total_kios')->nullable();
-            $table->integer('total-pedagang');
-            $table->integer('sampel-pedagang');
             $table->string('nama-pemeriksa');
             $table->string('instansi-pemeriksa');
             $table->date('tanggal-penilaian');

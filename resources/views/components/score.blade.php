@@ -74,6 +74,10 @@
         @case('Akomodasi')
         @case('Akomodasi Lainnya')
         @case('Gelanggang Olahraga')
+            @if($value >= 70) - Memenuhi Syarat
+            @else - Tidak Memenuhi Syarat
+            @endif
+            @break
         @case('Rumah Sakit')
             @if($value >= 8600) - Sangat Baik
             @elseif($value >= 6500) - Baik
@@ -163,6 +167,9 @@
         @case('Akomodasi')
         @case('Akomodasi Lainnya')
         @case('Gelanggang Olahraga')
+            <br>Memenuhi Syarat, dengan skor 70 ke atas
+            <br>Tidak Memenuhi Syarat, dengan skor < 70
+            @break
         @case('Rumah Sakit')
             <br>Kriteria Penilaian :
             <br>a. Kategori sangat baik = 8.600 - 10.000
