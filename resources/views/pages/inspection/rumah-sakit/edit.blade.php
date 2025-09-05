@@ -253,9 +253,9 @@
                                 $actualValue = $form_input['bobot'] == 0 ? $option['value'] : $form_input['bobot'] * $option['value'];
                                 $storedValue = $form_data[$form_input['name']] ?? null;
                                 
-                                // For fields with potential duplicate values, use stored ID for comparison
+                                // For field 1002 with potential duplicate values, use stored ID for comparison
                                 $isSelected = false;
-                                if (in_array($form_input['name'], ['1002', '9003']) && isset($option['id'])) {
+                                if ($form_input['name'] == '1002' && isset($option['id'])) {
                                     $storedId = $form_data[$form_input['name'] . '_selected_id'] ?? null;
                                     $isSelected = ($storedId == $option['id']);
                                 } else {
@@ -266,7 +266,7 @@
                             <span class="label-text">{{ $option['label'] }}</span>
                             <span class="badge badge-outline badge-error">+{{ $option['value'] }}</span>
                             
-                            @if(isset($option['id']) && in_array($form_input['name'], ['1002', '9003']))
+                            @if(isset($option['id']) && $form_input['name'] == '1002')
                                 <input type="hidden" name="{{ $form_input['name'] }}_selected_id_{{ $loop->index }}" value="{{ $option['id'] }}" />
                             @endif
                         </label>
@@ -551,8 +551,8 @@
     // Initialize conditional fields when page loads
     initializeConditionalFields();
 
-    // Handle option selection for fields with duplicate values
-    $('input[name="1002"], input[name="9003"]').on('change', function() {
+    // Handle option selection for field 1002 with duplicate values
+    $('input[name="1002"]').on('change', function() {
         const fieldName = $(this).attr('name');
         const selectedValue = $(this).val();
         
@@ -572,7 +572,7 @@
     });
 
     // Initialize selected IDs for currently checked options on page load
-    $('input[name="1002"]:checked, input[name="9003"]:checked').each(function() {
+    $('input[name="1002"]:checked').each(function() {
         const fieldName = $(this).attr('name');
         const parentLabel = $(this).closest('label');
         const hiddenField = parentLabel.find('input[type="hidden"][name^="' + fieldName + '_selected_id_"]');

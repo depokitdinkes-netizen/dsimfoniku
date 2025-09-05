@@ -82,13 +82,9 @@ class RumahSakitController extends Controller
                 Form::option(100, 'Memenuhi 5 L/TT/hari'),
                 Form::option(50, '< 5 L/TT/hari'),
                 Form::option(0, 'Tidak memenuhi')]),
-            Form::input('text', 'Keterangan: Sumber air yang digunakan', 'keterangan_sumber_air'),
-            Form::selects('1002', 4, 'Kuantitas Air untuk Keperluan Higiene dan Sanitasi (Bobot: 4)', [
-                Form::option(100, 'RS kelas A/B: 400–450 L/TT/hari; C/D: 200–300 L/TT/hari', '1002_a'),
-                Form::option(100, 'Rawat jalan: 5 L/orang/hari', '1002_b'),
-                Form::option(25, 'Tidak memenuhi', '1002_c')]),
-            Form::input('text', 'Keterangan: Apakah ada tangki air?', 'keterangan_tangki_air'),
-            Form::input('text', 'Keterangan: Frekuensi pembersihan tangki air per tahun?', 'keterangan_frekuensi_tangki'),
+            Form::selectc('1002a', 4, 100, 'RS kelas A dan B di ruang rawat inap 400 - 450 liter/TT/hari atau RS kelas C dan D di ruang rawat inap 200 - 300 liter/TT/hari (Bobot: 4)'),
+            Form::selectc('1002b', 4, 100, 'Di unit rawat jalan semua kelas rumah sakit 5 L/orang/hari (Bobot: 4)'),
+            Form::selectc('1002c', 4, 25, 'Tidak memenuhi persyaratan kuantitas air keperluan higiene dan sanitasi (Bobot: 4)'),
             Form::selects('1003', 3, 'Kualitas Air Minum (Bobot: 3)', [
                 Form::option(100, 'Memenuhi syarat (fisik, mikrobiologi, kimia, radioaktivitas)'),
                 Form::option(50, 'Sebagian memenuhi'),
@@ -112,10 +108,10 @@ class RumahSakitController extends Controller
             Form::selectc('2003e', 2, 10, 'Meja operasi (10,000–20,000 lux)'),
             Form::selectc('2003f', 2, 10, 'Anestesi pemulihan (300–500 lux)'),
             Form::selectc('2003g', 2, 10, 'Endoskopi, lab (75–100 lux)'),
-            Form::selectc('2003h', 2, 10, 'Sinar X (≥60 lux)'),
-            Form::selectc('2003i', 2, 5, 'Koridor (≥100 lux)'),
-            Form::selectc('2003j', 2, 5, 'Tangga (≥100 lux)'),
-            Form::selectc('2003k', 2, 10, 'Administrasi/kantor (≥100 lux)'),
+            Form::selectc('2003h', 2, 10, 'Sinar X (minimal 60 lux)'),
+            Form::selectc('2003i', 2, 5, 'Koridor (minimal 100 lux)'),
+            Form::selectc('2003j', 2, 5, 'Tangga (minimal 100 lux)'),
+            Form::selectc('2003k', 2, 10, 'Administrasi/kantor (minimal100 lux)'),
             Form::h(3, 'Kebisingan (Bobot: 2)'),
             Form::selectc('2004a', 2, 15, 'Ruang pasien (tidak tidur: 65 dBA; tidur: 55 dBA)'),
             Form::selectc('2004b', 2, 10, 'Operasi umum (65 dBA)'),
@@ -134,15 +130,15 @@ class RumahSakitController extends Controller
             Form::selectc('2004o', 2, 5, 'Ruang ICU (65 dBA)'),
             Form::selectc('2004p', 2, 5, 'Ambulans (85 dBA)'),
             Form::h(3, 'Kualitas Udara (Bobot: 2)'),
-            Form::selectc('2005a', 2, 10, 'Karbon monoksida ≤10,000 µg/m³'),
-            Form::selectc('2005b', 2, 10, 'Karbondioksida ≤1 ppm'),
-            Form::selectc('2005c', 2, 10, 'Timbal ≤0.5 µg/m³'),
-            Form::selectc('2005d', 2, 10, 'Nitrogen dioksida ≤200 µg/m³'),
-            Form::selectc('2005e', 2, 10, 'Sulfur dioksida ≤125 µg/m³'),
-            Form::selectc('2005f', 2, 10, 'Formaldehida ≤100 µg/m³'),
-            Form::selectc('2005g', 2, 10, 'TVOC ≤3 ppm'),
+            Form::selectc('2005a', 2, 10, 'Karbon monoksida maks. 10,000 µg/m³'),
+            Form::selectc('2005b', 2, 10, 'Karbondioksida maks. 1 ppm'),
+            Form::selectc('2005c', 2, 10, 'Timbal maks. 0.5 µg/m³'),
+            Form::selectc('2005d', 2, 10, 'Nitrogen dioksida maks. 200 µg/m³'),
+            Form::selectc('2005e', 2, 10, 'Sulfur dioksida maks. 125 µg/m³'),
+            Form::selectc('2005f', 2, 10, 'Formaldehida maks. 100 µg/m³'),
+            Form::selectc('2005g', 2, 10, 'TVOC maks. 3 ppm'),
             Form::selectc('2005h', 2, 15, 'Tidak berbau (bebas H₂S, amonia)'),
-            Form::selectc('2005i', 2, 15, 'Debu PM10 ≤150 µg/m³; PM2.5 ≤25 µg/m³'),
+            Form::selectc('2005i', 2, 15, 'Debu PM10 maks. 150 µg/m³; PM2.5 maks. 25 µg/m³'),
             Form::h(2, 'III. KESEHATAN PANGAN SIAP SAJI RUMAH SAKIT (Bobot: 10)'),
             Form::selects('3001', 5, 'Standar Mutu Pangan Siap Saji (Bobot: 5)', [
                 Form::option(100, 'Sertifikat jasa boga golongan B'),
@@ -166,7 +162,7 @@ class RumahSakitController extends Controller
             Form::selectc('4003c', 2, 25, 'Pertemuan lantai-dinding konus/lengkung'),
             Form::selectc('4003d', 2, 25, 'Dinding kuat, rata, warna terang, cat tidak luntur'),
             Form::h(3, 'Pintu Rumah Sakit (Bobot: 2)'),
-            Form::selectc('4004a', 2, 20, 'Pintu utama ≥120 cm, lainnya ≥90 cm'),
+            Form::selectc('4004a', 2, 20, 'Pintu utama minimal 120 cm, lainnya minimal 90 cm'),
             Form::selectc('4004b', 2, 20, 'Tidak ada perbedaan ketinggian lantai di pintu masuk'),
             Form::selectc('4004c', 2, 15, 'Pintu toilet aksesibel terbuka keluar'),
             Form::selectc('4004d', 2, 15, 'Pintu akses brankar dilapisi bahan anti-benturan'),
@@ -187,7 +183,7 @@ class RumahSakitController extends Controller
             Form::input('text', 'Keterangan: Nama pihak ketiga pest control?', 'keterangan_pihak_ketiga_pest'),
             Form::selectc('5001b', 5, 10, 'Larva Anopheles sp. indeks habitat <1'),
             Form::selectc('5001c', 5, 10, 'Aedes aegypti/albopictus resting rate <0.025'),
-            Form::selectc('5001d', 5, 10, 'Larva Aedes aegypti/albopictus ABJ ≥95'),
+            Form::selectc('5001d', 5, 10, 'Larva Aedes aegypti/albopictus ABJ minimal 95'),
             Form::input('text', 'Keterangan: Nomor dan tahun perijinan pest control?', 'keterangan_perijinan_pest'),
             Form::selectc('5001e', 5, 10, 'Culex sp. MHD <1'),
             Form::selectc('5001f', 5, 10, 'Larva Culex sp. indeks habitat <5'),
@@ -202,7 +198,7 @@ class RumahSakitController extends Controller
             Form::h(3, 'Limbah Padat Domestik (Bobot: 5)'),
             Form::selectc('6001a', 5, 40, 'Penanganan limbah dengan 3R'),
             Form::selectc('6001b', 5, 30, 'Memiliki TPS limbah domestik'),
-            Form::selectc('6001c', 5, 30, 'Pengangkutan TPS ≤2x24 jam'),
+            Form::selectc('6001c', 5, 30, 'Pengangkutan TPS maks. 2x24 jam'),
             Form::h(3, 'Limbah Padat B3 (Bobot: 5)'),
             Form::selectc('6002a', 5, 20, 'Pemilahan medis & non-medis'),
             Form::input('text', 'Keterangan: Nomor dan tahun perijinan pemilahan?', 'keterangan_perijinan_pemilahan'),
@@ -216,18 +212,18 @@ class RumahSakitController extends Controller
             Form::input('text', 'Keterangan: Nomor dan tahun perijinan IPAL?', 'keterangan_perijinan_ipal'),
             Form::selectc('6003b', 4, 50, 'Hasil olahan limbah cair sesuai baku mutu'),
             Form::h(3, 'Limbah Gas (Bobot: 2)'),
-            Form::selectc('6004a', 2, 20, 'Frekuensi pengambilan contoh sesuai'),
-            Form::selectc('6004b', 2, 20, 'Kualitas emisi sesuai standar'),
-            Form::selectc('6004c', 2, 20, 'Pelaporan uji minimal 1x/tahun'),
-            Form::selectc('6004d', 2, 20, 'Sumber emisi ada fasilitas uji emisi'),
-            Form::selectc('6004e', 2, 20, 'Cerobong dilengkapi alat kelengkapan'),
+            Form::selectc('6004a', 2, 20, 'Memenuhi penaatan dalam frekuensi  pengambilan contoh pemeriksaan emisi gas buang dan udara ambien luar'),
+            Form::selectc('6004b', 2, 20, 'Kualitas emisi gas buang dan partikulat dari cerobong memenuhi standar kualitas udara sesuai dengan ketentuan peraturan perundangundangan tentang standar kualitas gas emisi sumber tidak bergerak'),
+            Form::selectc('6004c', 2, 20, 'Memenuhi penaatan pelaporan hasil uji atau pengukuran laboratorium limbah gas kepada instansi pemerintah sesuai ketentuan, minimal setiap 1 kali setahun'),
+            Form::selectc('6004d', 2, 20, 'Setiap sumber emisi gas berbentuk cerobong tinggi seperti generator set, boiler dilengkapi dengan fasilitas penunjang uji emisi.'),
+            Form::selectc('6004e', 2, 20, 'cerobong gas buang di rumah sakit dilengkapi dengan alat kelengkapan cerobong.'),
             Form::h(2, 'VII. PENGAMANAN RADIASI (Bobot: 10)'),
             Form::h(3, 'Pengamanan Radiasi (Bobot: 10)'),
             Form::selectc('7001', 10, 40, 'Izin penggunaan alat dari BAPETEN'),
             Form::selectc('7002', 10, 30, 'Peralatan proteksi radiasi'),
             Form::selectc('7003', 10, 30, 'Pemantauan pekerja radiasi dengan APD'),
             Form::selectc('7004', 10, 20, 'Memiliki alat rontgen portable'),
-            Form::selectc('7005', 10, 20, 'Rontgen portable dengan shielding segitiga/mengelilingi'),
+            Form::selectc('7005', 10, 20, 'Jika memiliki Alat Rotgen Portable, apakah memiliki Shielding radiasi yang berbentuk segitiga/shieling mengelilingi pada saat proses dilakukan'),
             Form::h(2, 'VIII. PENYELENGGARAAN LINEN (Bobot: 10)'),
             Form::h(3, 'Penyelenggaraan Linen Internal (Bobot: 7)'),
             Form::selectc('8001a', 7, 20, 'Air higiene/sanitasi & air panas memadai'),
@@ -251,8 +247,7 @@ class RumahSakitController extends Controller
                 Form::option(50, 'Sebagian peralatan'),
                 Form::option(0, 'Tidak ada')]),
             Form::selects('9003', 3, 'Tenaga Kesehatan Lingkungan (Bobot: 3)', [
-                Form::option(100, 'Penanggung jawab kelas A/B: S1/D4 Kesling'),
-                Form::option(100, 'Penanggung jawab kelas C/D: D3 Kesling'),
+                Form::option(100, 'Penanggung jawab kesehatan lingkungan rumah sakit, baik pemerintah maupun swasta, harus memiliki pendidikan di bidang kesehatan lingkungan, sanitasi, teknik lingkungan, atau teknik penyehatan, dengan kualifikasi minimal Sarjana (S1) atau Diploma IV untuk kelas A dan B, serta minimal Diploma III (D3) untuk kelas C dan D'),
                 Form::option(25, 'Tidak sesuai kriteria')]),
             Form::h(2, 'X. INFORMASI TAMBAHAN'),
             Form::input('textarea', 'Pelaporan Elektronik', 'pelaporan_elektronik'),
@@ -435,7 +430,7 @@ class RumahSakitController extends Controller
                             'Nyamuk Anopheles sp. MBR (Man biting rate) <0,025',
                             'Larva Anopheles sp. indeks habitat <1',
                             'Nyamuk Aedes aegypti dan/atau Aedes albopictus Angka Istirahat (Resting rate) <0,025',
-                            'Larva Aedes aegypti dan /atau ABJ (Angka Bebas Jentik) ≥95',
+                            'Larva Aedes aegypti dan /atau ABJ (Angka Bebas Jentik) minimal 95',
                             'Nyamuk Culex sp. MHD (Man Hour Density) <1',
                             'Larva Culex sp. indeks habitat <5',
                             'Mansonia sp., MHD (Man Hour Density) <5',
@@ -518,13 +513,11 @@ class RumahSakitController extends Controller
                 'dokumen-pertek-ipal' => 'required|in:Ya,Tidak',
                 'no-dokumen-pertek-ipal' => 'nullable|string|max:255',
                 'pengisian-sikelim' => 'required|in:Ya,Tidak',
-                'alasan-tidak-sikelim' => 'nullable|string|max:500',
+                'alasan-sikelim' => 'nullable|string|max:500',
                 'pengisian-dsmiling' => 'required|in:Ya,Tidak',
-                'alasan-tidak-dsmiling' => 'nullable|string|max:500',
+                'alasan-dsmiling' => 'nullable|string|max:500',
                 
                 // Validasi field keterangan baru
-                'keterangan_sumber_air' => 'nullable|string|max:500',
-                'keterangan_tangki_air' => 'nullable|string|max:500',
                 'keterangan_pihak_ketiga_jasa_boga' => 'nullable|string|max:255',
                 'jumlah_penjamah_pangan' => 'nullable|integer|min:0',
                 'jumlah_penjamah_bersertifikat' => 'nullable|integer|min:0',
@@ -535,6 +528,14 @@ class RumahSakitController extends Controller
                 'nomor_perizinan_ipal' => 'nullable|string|max:255',
                 'memiliki_alat_rontgen_portable' => 'nullable|in:0,1',
                 'memiliki_shielding_radiasi' => 'nullable|in:0,1',
+                
+                // Validasi field penilaian utama
+                '1001' => 'nullable|in:0,25,50,100',
+                '1002a' => 'nullable|in:0,400',
+                '1002b' => 'nullable|in:0,400',
+                '1002c' => 'nullable|in:0,100',
+                '1003' => 'nullable|in:0,50,100',
+                '1004' => 'nullable|in:0,50,100',
             ]);
 
             $data = $request->all();
@@ -543,42 +544,38 @@ class RumahSakitController extends Controller
 
             // Process penilaian columns with proper defaults based on field type
             foreach ($this->formPenilaianName() as $column) {
-                // Get default value based on field specifications
-                $defaultValue = $this->getDefaultValueForField($column);
-                $data[$column] = $request->input($column, $defaultValue);
+                // For selectc fields (1002a, 1002b, 1002c), use exact request value if present
+                if (in_array($column, ['1002a', '1002b', '1002c']) && $request->has($column)) {
+                    $data[$column] = $request->input($column);
+                } else {
+                    // Get default value based on field specifications
+                    $defaultValue = $this->getDefaultValueForField($column);
+                    $data[$column] = $request->input($column, $defaultValue);
+                }
                 
-                // DEBUG: Log first 5 fields to see what's happening
-                if (in_array($column, ['1001', '1002', '1003', '1004', '2001a'])) {
+                // DEBUG: Log field processing to see what's happening
+                if (in_array($column, ['1001', '1002a', '1002b', '1002c', '1003', '1004', '2001a'])) {
                     Log::info("Field Processing Debug", [
                         'field' => $column,
                         'request_value' => $request->input($column, 'NOT_SET'),
-                        'default_value' => $defaultValue,
-                        'final_value' => $data[$column]
+                        'default_value' => in_array($column, ['1002a', '1002b', '1002c']) ? 'DIRECT_FROM_REQUEST' : $this->getDefaultValueForField($column),
+                        'final_value' => $data[$column],
+                        'request_has_field' => $request->has($column)
                     ]);
                 }
             }
             
             // Handle special fields with specific handling
             // Ensure these fields get their correct values from request (not processed by getDefaultValueForField)
-            if ($request->has('1002')) {
-                $data['1002'] = $request->input('1002');
-                // Use submitted ID if available, otherwise calculate from value
-                $data['1002_selected_id'] = $request->input('1002_selected_id', $this->getSelectedOptionId('1002', $request->input('1002')));
-            } else {
-                // Set default values
-                $data['1002'] = $this->getDefaultValueForField('1002');
-                $data['1002_selected_id'] = $this->getDefaultOptionId('1002');
-            }
             
             if ($request->has('9003')) {
                 $data['9003'] = $request->input('9003');
-                // Use submitted ID if available, otherwise calculate from value
-                $data['9003_selected_id'] = $request->input('9003_selected_id', $this->getSelectedOptionId('9003', $request->input('9003')));
             } else {
                 // Set default values
                 $data['9003'] = $this->getDefaultValueForField('9003');
-                $data['9003_selected_id'] = $this->getDefaultOptionId('9003');
             }
+            
+
             
             if ($request->has('memiliki_alat_rontgen_portable')) {
                 $data['memiliki_alat_rontgen_portable'] = $request->input('memiliki_alat_rontgen_portable');
@@ -595,22 +592,22 @@ class RumahSakitController extends Controller
             $data['pengisian-sikelim'] = $request->input('pengisian-sikelim', 'Ya');
             $data['pengisian-dsmiling'] = $request->input('pengisian-dsmiling', 'Ya');
             
-            // Calculate raw score and normalize to 10,000
+            // Calculate raw score and normalize to 10,000 based on max score 11,000
             $totalScoreObtained = array_reduce($this->formPenilaianScoreFields(), function($carry, $column) use ($request) {
                 $value = $request->input($column, 0);
                 return $carry + (is_numeric($value) ? (int)$value : 0);
             }, 0);
-            // Normalize raw score to 10,000 with cap to prevent exceeding maximum
-            $normalizedScore = min(10000, round(($totalScoreObtained / 10400) * 10000));
+            // Normalize raw score to 10,000 with max score 11,000
+            $normalizedScore = round(($totalScoreObtained / 11200) * 10000);
             $data['skor'] = $normalizedScore;
 
             // Log total score for debugging
             Log::info('Rumah Sakit Store - Total Score Calculated', [
                 'raw_score' => $totalScoreObtained,
                 'normalized_score' => $normalizedScore,
-                'max_raw_score' => 10400,
+                'max_raw_score' => 11200,
                 'max_normalized_score' => 10000,
-                'percentage' => round(($totalScoreObtained / 10000) * 100, 2) . '%',
+                'percentage' => round(($totalScoreObtained / 11200) * 100, 2) . '%',
                 'category' => $normalizedScore >= 8600 ? 'Sangat Baik' : ($normalizedScore >= 6500 ? 'Baik' : 'Kurang'),
                 'user_id' => Auth::id(),
                 'subjek' => $request->input('subjek'),
@@ -764,13 +761,11 @@ class RumahSakitController extends Controller
                 'dokumen-pertek-ipal' => 'required|in:Ya,Tidak',
                 'nomor-dokumen-pertek-ipal' => 'nullable|string|max:255',
                 'pengisian-sikelim' => 'required|in:Ya,Tidak',
-                'alasan-tidak-sikelim' => 'nullable|string|max:500',
+                'alasan-sikelim' => 'nullable|string|max:500',
                 'pengisian-dsmiling' => 'required|in:Ya,Tidak',
-                'alasan-tidak-dsmiling' => 'nullable|string|max:500',
+                'alasan-dsmiling' => 'nullable|string|max:500',
                 
                 // Validasi field keterangan baru
-                'keterangan_sumber_air' => 'nullable|string|max:500',
-                'keterangan_tangki_air' => 'nullable|string|max:500',
                 'keterangan_pihak_ketiga_jasa_boga' => 'nullable|string|max:255',
                 'jumlah_penjamah_pangan' => 'nullable|integer|min:0',
                 'jumlah_penjamah_bersertifikat' => 'nullable|integer|min:0',
@@ -781,6 +776,14 @@ class RumahSakitController extends Controller
                 'nomor_perizinan_ipal' => 'nullable|string|max:255',
                 'memiliki_alat_rontgen_portable' => 'nullable|in:0,1',
                 'memiliki_shielding_radiasi' => 'nullable|in:0,1',
+                
+                // Validasi field penilaian utama
+                '1001' => 'nullable|in:0,25,50,100',
+                '1002a' => 'nullable|in:0,400',
+                '1002b' => 'nullable|in:0,400',
+                '1002c' => 'nullable|in:0,100',
+                '1003' => 'nullable|in:0,50,100',
+                '1004' => 'nullable|in:0,50,100',
             ]);
 
             // Check if this is a duplicate action
@@ -793,26 +796,24 @@ class RumahSakitController extends Controller
 
                 // Add form penilaian scores with proper defaults
                 foreach ($this->formPenilaianName() as $column) {
-                    $defaultValue = $this->getDefaultValueForField($column);
-                    $data[$column] = $request->input($column, $defaultValue);
+                    // For selectc fields (1002a, 1002b, 1002c), use exact request value if present
+                    if (in_array($column, ['1002a', '1002b', '1002c']) && $request->has($column)) {
+                        $data[$column] = $request->input($column);
+                    } else {
+                        $defaultValue = $this->getDefaultValueForField($column);
+                        $data[$column] = $request->input($column, $defaultValue);
+                    }
                 }
                 
                 // Handle special fields with specific handling - take exact value from request
-                if ($request->has('1002')) {
-                    $data['1002'] = $request->input('1002');
-                    $data['1002_selected_id'] = $request->input('1002_selected_id', $this->getSelectedOptionId('1002', $request->input('1002')));
-                } else {
-                    $data['1002'] = $this->getDefaultValueForField('1002');
-                    $data['1002_selected_id'] = $this->getDefaultOptionId('1002');
-                }
                 
                 if ($request->has('9003')) {
                     $data['9003'] = $request->input('9003');
-                    $data['9003_selected_id'] = $request->input('9003_selected_id', $this->getSelectedOptionId('9003', $request->input('9003')));
                 } else {
                     $data['9003'] = $this->getDefaultValueForField('9003');
-                    $data['9003_selected_id'] = $this->getDefaultOptionId('9003');
                 }
+                
+
                 
                 if ($request->has('memiliki_alat_rontgen_portable')) {
                     $data['memiliki_alat_rontgen_portable'] = $request->input('memiliki_alat_rontgen_portable');
@@ -834,16 +835,16 @@ class RumahSakitController extends Controller
                 $data['nomor-dokumen-pertek-ipal'] = $request->input('nomor-dokumen-pertek-ipal');
                 
                 // Add alasan fields
-                $data['alasan-sikelim'] = $request->input('alasan-tidak-sikelim');
-                $data['alasan-dsmiling'] = $request->input('alasan-tidak-dsmiling');
+                $data['alasan-sikelim'] = $request->input('alasan-sikelim');
+                $data['alasan-dsmiling'] = $request->input('alasan-dsmiling');
                 
-                // Calculate raw score and normalize to 10,000
+                // Calculate raw score and normalize to 10,000 based on max score 11,200
                 $totalScoreObtained = array_reduce($this->formPenilaianScoreFields(), function($carry, $column) use ($request) {
                     $value = $request->input($column, 0);
                     return $carry + (is_numeric($value) ? (int)$value : 0);
                 }, 0);
-                // Normalize raw score to 10,000 with cap to prevent exceeding maximum
-                $normalizedScore = min(10000, round(($totalScoreObtained / 10000) * 10000));
+                // Normalize raw score to 10,000 with max score 11,200
+                $normalizedScore = round(($totalScoreObtained / 11200) * 10000);
                 $data['skor'] = $normalizedScore;
 
                 // Log total score for debugging - Duplicate action
@@ -851,9 +852,9 @@ class RumahSakitController extends Controller
                     'action' => 'duplicate',
                     'raw_score' => $totalScoreObtained,
                     'normalized_score' => $normalizedScore,
-                    'max_raw_score' => 10000,
+                    'max_raw_score' => 11200,
                     'max_normalized_score' => 10000,
-                    'percentage' => round(($totalScoreObtained / 10000) * 100, 2) . '%',
+                    'percentage' => round(($totalScoreObtained / 11200) * 100, 2) . '%',
                     'category' => $normalizedScore >= 8600 ? 'Sangat Baik' : ($normalizedScore >= 6500 ? 'Baik' : 'Kurang'),
                     'user_id' => Auth::id(),
                     'original_id' => $rumahSakit->id,
@@ -904,13 +905,13 @@ class RumahSakitController extends Controller
             // Process data for update
             $data = $this->processUpdateData($request);
             
-            // Calculate raw score and normalize to 10,000
+            // Calculate raw score and normalize to 10,000 based on max score 11,200
             $totalScoreObtained = array_reduce($this->formPenilaianScoreFields(), function($carry, $column) use ($request) {
                 $value = $request->input($column, 0);
                 return $carry + (is_numeric($value) ? (int)$value : 0);
             }, 0);
-            // Normalize raw score to 10,000 with cap to prevent exceeding maximum
-            $normalizedScore = min(10000, round(($totalScoreObtained / 10000) * 10000));
+            // Normalize raw score to 10,000 with max score 11,200
+            $normalizedScore = round(($totalScoreObtained / 11200) * 10000);
             $data['skor'] = $normalizedScore;
 
             // Log total score for debugging - Update action
@@ -918,9 +919,9 @@ class RumahSakitController extends Controller
                 'action' => 'update',
                 'raw_score' => $totalScoreObtained,
                 'normalized_score' => $normalizedScore,
-                'max_raw_score' => 10000,
+                'max_raw_score' => 11200,
                 'max_normalized_score' => 10000,
-                'percentage' => round(($totalScoreObtained / 10000) * 100, 2) . '%',
+                'percentage' => round(($totalScoreObtained / 11200) * 100, 2) . '%',
                 'category' => $normalizedScore >= 8600 ? 'Sangat Baik' : ($normalizedScore >= 6500 ? 'Baik' : 'Kurang'),
                 'user_id' => Auth::id(),
                 'rumah_sakit_id' => $rumahSakit->id,
@@ -1036,8 +1037,13 @@ class RumahSakitController extends Controller
 
         // Process penilaian columns with proper defaults
         foreach ($this->formPenilaianName() as $column) {
-            $defaultValue = $this->getDefaultValueForField($column);
-            $data[$column] = $request->input($column, $defaultValue);
+            // For selectc fields (1002a, 1002b, 1002c), use exact request value if present
+            if (in_array($column, ['1002a', '1002b', '1002c']) && $request->has($column)) {
+                $data[$column] = $request->input($column);
+            } else {
+                $defaultValue = $this->getDefaultValueForField($column);
+                $data[$column] = $request->input($column, $defaultValue);
+            }
         }
         
         // Set default values
@@ -1051,8 +1057,8 @@ class RumahSakitController extends Controller
         $data['nomor-dokumen-pertek-ipal'] = $request->input('nomor-dokumen-pertek-ipal');
         
         // Add alasan fields
-        $data['alasan-sikelim'] = $request->input('alasan-tidak-sikelim');
-        $data['alasan-dsmiling'] = $request->input('alasan-tidak-dsmiling');
+        $data['alasan-sikelim'] = $request->input('alasan-sikelim');
+        $data['alasan-dsmiling'] = $request->input('alasan-dsmiling');
         
         // Preserve original values if current values are empty
         if (empty($data['kelurahan']) && !empty($rumahSakit->kelurahan)) {
@@ -1106,25 +1112,21 @@ class RumahSakitController extends Controller
         
         // Penilaian fields with proper defaults
         foreach ($this->formPenilaianName() as $column) {
-            $defaultValue = $this->getDefaultValueForField($column);
-            $data[$column] = $request->input($column, $defaultValue);
+            // For selectc fields (1002a, 1002b, 1002c), use exact request value if present
+            if (in_array($column, ['1002a', '1002b', '1002c']) && $request->has($column)) {
+                $data[$column] = $request->input($column);
+            } else {
+                $defaultValue = $this->getDefaultValueForField($column);
+                $data[$column] = $request->input($column, $defaultValue);
+            }
         }
         
         // Handle special fields with specific handling - take exact value from request
-        if ($request->has('1002')) {
-            $data['1002'] = $request->input('1002');
-            $data['1002_selected_id'] = $request->input('1002_selected_id', $this->getSelectedOptionId('1002', $request->input('1002')));
-        } else {
-            $data['1002'] = $this->getDefaultValueForField('1002');
-            $data['1002_selected_id'] = $this->getDefaultOptionId('1002');
-        }
         
         if ($request->has('9003')) {
             $data['9003'] = $request->input('9003');
-            $data['9003_selected_id'] = $request->input('9003_selected_id', $this->getSelectedOptionId('9003', $request->input('9003')));
         } else {
             $data['9003'] = $this->getDefaultValueForField('9003');
-            $data['9003_selected_id'] = $this->getDefaultOptionId('9003');
         }
         
         if ($request->has('memiliki_alat_rontgen_portable')) {
@@ -1147,43 +1149,11 @@ class RumahSakitController extends Controller
         $data['nomor-dokumen-pertek-ipal'] = $request->input('nomor-dokumen-pertek-ipal');
         
         // Add alasan fields
-        $data['alasan-sikelim'] = $request->input('alasan-tidak-sikelim');
-        $data['alasan-dsmiling'] = $request->input('alasan-tidak-dsmiling');
+        $data['alasan-sikelim'] = $request->input('alasan-sikelim');
+        $data['alasan-dsmiling'] = $request->input('alasan-dsmiling');
         
         return $data;
     }
 
-    /**
-     * Get the selected option ID based on field name and value
-     */
-    private function getSelectedOptionId($fieldName, $selectedValue)
-    {
-        $formFields = $this->formPenilaian();
-        
-        foreach ($formFields as $field) {
-            if (isset($field['name']) && $field['name'] === $fieldName && isset($field['options'])) {
-                foreach ($field['options'] as $option) {
-                    $actualValue = $field['bobot'] == 0 ? $option['value'] : $field['bobot'] * $option['value'];
-                    if ($actualValue == $selectedValue && isset($option['id'])) {
-                        return $option['id'];
-                    }
-                }
-            }
-        }
-        
-        return null;
-    }
 
-    /**
-     * Get the default option ID for fields with duplicate values
-     */
-    private function getDefaultOptionId($fieldName)
-    {
-        $defaultIds = [
-            '1002' => '1002_d', // Default to lowest option (tidak memenuhi persyaratan)
-            '9003' => '9003_c', // Default to lowest option (tidak sesuai kriteria)
-        ];
-        
-        return $defaultIds[$fieldName] ?? null;
-    }
 }

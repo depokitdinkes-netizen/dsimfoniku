@@ -33,9 +33,7 @@ class RumahSakit extends Model {
             'status-operasi', 'koordinat', 'user_id',
             
             // Form Penilaian - Kesehatan Air (I)
-            '1001', '1002', '1003', '1004',
-            '1002_selected_id', '9003_selected_id', // Store selected option IDs for fields with duplicate values
-            'keterangan_sumber_air', 'keterangan_tangki_air',
+            '1001', '1002a', '1002b', '1002c', '1003', '1004',
             
             // Form Penilaian - Kesehatan Udara (II)
             '2001a', '2001b', '2002',
