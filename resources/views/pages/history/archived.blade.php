@@ -13,7 +13,7 @@
             <button type="submit" class="btn btn-primary btn-square join-item">
                 <i class="ri-search-line"></i>
             </button>
-            <input type="text" name="s" class="input input-bordered join-item w-full" placeholder="Cari hasil inspeksi ..." />
+            <input type="text" name="s" class="input input-bordered join-item w-full" placeholder="Cari berdasarkan nama tempat..." value="{{ request('s') }}" />
         </form>
     </div>
 

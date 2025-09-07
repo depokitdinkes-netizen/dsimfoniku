@@ -26,7 +26,7 @@ class PerpipaanNonPDAMController extends Controller {
             Form::input('text', 'Kelurahan', 'kelurahan'),
             Form::input('select', 'SK Pengelola dari Kelurahan', 'sk-pengelola'),
             Form::input('text', 'Nama Pemeriksa', 'nama-pemeriksa'),
-            Form::input('text', 'Instansi Pemeriksa', 'instansi-pemeriksa'),
+            Form::input('select', 'Instansi Pemeriksa', 'instansi-pemeriksa'),
             Form::input('date', 'Tanggal Penilaian', 'tanggal-penilaian'),
             Form::input('url', 'Upload Dokumen SLHS (Opsional)', 'dokumen_slhs'),
             Form::input('date', 'Tanggal Terbit SLHS (Opsional)', 'slhs_issued_date'),
@@ -216,6 +216,11 @@ class PerpipaanNonPDAMController extends Controller {
 
         $data = $request->all();
         
+        // Handle custom instansi pemeriksa input
+        if (!empty($request->input('instansi-lainnya'))) {
+            $data['instansi-pemeriksa'] = $request->input('instansi-lainnya');
+        }
+        
         // Tambahkan user_id dari user yang sedang login
         $data['user_id'] = Auth::id();
         
@@ -284,6 +289,11 @@ class PerpipaanNonPDAMController extends Controller {
         ]);
 
         $data = $request->all();
+        
+        // Handle custom instansi pemeriksa input
+        if (!empty($request->input('instansi-lainnya'))) {
+            $data['instansi-pemeriksa'] = $request->input('instansi-lainnya');
+        }
         
         // Auto-calculate expire date from issued date + 3 years
         if (!empty($data['slhs_issued_date'])) {

@@ -11,4 +11,9 @@ class PerlindunganMataAir extends Model {
 
     protected $table = 'perlindungan_mata_air';
     protected $guarded = ['id'];
+
+    public function user()
+    {
+        return $this->belongsTo(\App\Models\User::class);
+    }
 }

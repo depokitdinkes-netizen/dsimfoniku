@@ -29,7 +29,7 @@ class StasiunController extends Controller
             Form::input('select', 'Status Operasi', 'status-operasi'),
             Form::input('text', 'Koordinat Lokasi', 'koordinat'),
             Form::input('text', 'Nama Pemeriksa', 'nama-pemeriksa'),
-            Form::input('text', 'Instansi Pemeriksa', 'instansi-pemeriksa'),
+            Form::input('select', 'Instansi Pemeriksa', 'instansi-pemeriksa'),
             Form::input('date', 'Tanggal Penilaian', 'tanggal-penilaian')
         ];
     }
@@ -203,6 +203,11 @@ class StasiunController extends Controller
             // Add auth user ID
             $data['user_id'] = Auth::id();
 
+            // Handle instansi-lainnya logic
+            if ($request->has('instansi-lainnya') && !empty($request->input('instansi-lainnya'))) {
+                $data['instansi-pemeriksa'] = $request->input('instansi-lainnya');
+            }
+
             foreach ($this->formPenilaianName() as $column) {
                 $data[$column] = $request->input($column, '0');
             }
@@ -301,6 +306,11 @@ class StasiunController extends Controller
             Log::info('Validation passed for update');
 
             $data = $request->all();
+
+            // Handle instansi-lainnya logic
+            if ($request->has('instansi-lainnya') && !empty($request->input('instansi-lainnya'))) {
+                $data['instansi-pemeriksa'] = $request->input('instansi-lainnya');
+            }
 
             foreach ($this->formPenilaianName() as $column) {
                 $data[$column] = $request->input($column, '0');

@@ -11,4 +11,9 @@ class PenyimpananAirHujan extends Model {
 
     protected $table = 'penyimpanan_air_hujan';
     protected $guarded = ['id'];
+
+    public function user()
+    {
+        return $this->belongsTo(\App\Models\User::class);
+    }
 }

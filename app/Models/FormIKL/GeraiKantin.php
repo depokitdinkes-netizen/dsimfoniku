@@ -11,4 +11,14 @@ class GeraiKantin extends Model {
 
     protected $table = "gerai_kantin";
     protected $guarded = ['id'];
+
+    public function user()
+    {
+        return $this->belongsTo(\App\Models\User::class);
+    }
+
+    public function kantin()
+    {
+        return $this->belongsTo(Kantin::class, 'id-kantin');
+    }
 }

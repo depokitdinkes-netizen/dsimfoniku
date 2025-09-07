@@ -1053,7 +1053,10 @@ class RestoranController extends Controller
 
         $data = $request->all();
         
-
+        // Handle instansi lainnya
+        if ($request->input('instansi-pemeriksa') === 'Lainnya' && $request->filled('instansi-lainnya')) {
+            $data['instansi-pemeriksa'] = $request->input('instansi-lainnya');
+        }
         
         // Tambahkan user_id dari user yang sedang login
         $data['user_id'] = Auth::id();
@@ -1148,6 +1151,11 @@ class RestoranController extends Controller
         ]);
 
         $data = $request->all();
+        
+        // Handle instansi lainnya
+        if ($request->input('instansi-pemeriksa') === 'Lainnya' && $request->filled('instansi-lainnya')) {
+            $data['instansi-pemeriksa'] = $request->input('instansi-lainnya');
+        }
         
         // Handle file upload if present
         if ($request->hasFile('dokumen_slhs')) {

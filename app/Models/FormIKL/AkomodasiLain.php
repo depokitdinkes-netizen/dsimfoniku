@@ -11,4 +11,9 @@ class AkomodasiLain extends Model {
 
     protected $table = "akomodasi_lain";
     protected $guarded = ['id'];
+
+    public function user()
+    {
+        return $this->belongsTo(\App\Models\User::class);
+    }
 }

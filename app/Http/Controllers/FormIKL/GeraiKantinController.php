@@ -28,6 +28,8 @@ class GeraiKantinController extends Controller
             Form::input('text', 'Nama Gerai', 'subjek'),
             Form::input('text', 'Nama Pengelola/Pemilik/Penanggung Jawab', 'pengelola'),
             Form::input('number', 'Kontak Pengelola', 'kontak'),
+            Form::input('text', 'Nama Pemeriksa', 'nama-pemeriksa'),
+            Form::input('select', 'Instansi Pemeriksa', 'instansi-pemeriksa'),
             Form::input('select', 'Apakah masih beroperasi?', 'status-operasi'),
         ];
     }
@@ -277,6 +279,11 @@ class GeraiKantinController extends Controller
 
         $data = $request->all();
         
+        // Handle custom instansi pemeriksa input
+        if (!empty($request->input('instansi-lainnya'))) {
+            $data['instansi-pemeriksa'] = $request->input('instansi-lainnya');
+        }
+        
         // Tambahkan user_id dari user yang sedang login
         $data['user_id'] = Auth::id();
         $data['skor'] = (int) (100 - (array_reduce($this->formPenilaianName(), fn($carry, $column) => $carry + $request->input($column, 0)) / 170) * 100);
@@ -329,6 +336,11 @@ class GeraiKantinController extends Controller
         ]);
 
         $data = $request->all();
+        
+        // Handle custom instansi pemeriksa input
+        if (!empty($request->input('instansi-lainnya'))) {
+            $data['instansi-pemeriksa'] = $request->input('instansi-lainnya');
+        }
         
         if ($request->hasFile('dokumen_slhs')) {
             $file = $request->file('dokumen_slhs');

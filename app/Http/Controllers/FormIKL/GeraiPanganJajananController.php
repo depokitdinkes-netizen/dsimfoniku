@@ -31,7 +31,7 @@ class GeraiPanganJajananController extends Controller
             Form::input('number', 'Nomor Induk Berusaha (Opsional)', 'u006'),
             Form::input('text', 'Lokasi Dapur Gerai Pangan', 'u008'),
             Form::input('text', 'Nama Pemeriksa', 'nama-pemeriksa'),
-            Form::input('text', 'Instansi Pemeriksa', 'instansi-pemeriksa'),
+            Form::input('select', 'Instansi Pemeriksa', 'instansi-pemeriksa'),
             Form::input('date', 'Tanggal Penilaian', 'tanggal-penilaian'),
             Form::input('url', 'Link Dokumen SLHS (Opsional)', 'dokumen_slhs'),
             Form::input('date', 'Tanggal Terbit SLHS (Opsional)', 'slhs_issued_date'),
@@ -269,6 +269,13 @@ class GeraiPanganJajananController extends Controller
         ]);
 
         $data = $request->all();
+        
+        // Handle instansi-lainnya logic
+        if (isset($data['instansi-pemeriksa']) && $data['instansi-pemeriksa'] === 'Lainnya' && isset($data['instansi-lainnya'])) {
+            $data['instansi-pemeriksa'] = $data['instansi-lainnya'];
+            unset($data['instansi-lainnya']);
+        }
+        
         $data['user_id'] = Auth::id();
         $data['skor'] = (int) (100 - (array_reduce($this->formPenilaianName(), fn($carry, $column) => $carry + $request->input($column, 0)) / 83) * 100);
 
@@ -321,6 +328,12 @@ class GeraiPanganJajananController extends Controller
         ]);
 
         $data = $request->all();
+        
+        // Handle instansi-lainnya logic
+        if (isset($data['instansi-pemeriksa']) && $data['instansi-pemeriksa'] === 'Lainnya' && isset($data['instansi-lainnya'])) {
+            $data['instansi-pemeriksa'] = $data['instansi-lainnya'];
+            unset($data['instansi-lainnya']);
+        }
         
         // Handle file upload if present
         if ($request->hasFile('dokumen_slhs')) {

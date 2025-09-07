@@ -11,4 +11,9 @@ class PerpipaanNonPdam extends Model {
 
     protected $table = "perpipaan_non_pdam";
     protected $guarded = ['id'];
+
+    public function user()
+    {
+        return $this->belongsTo(\App\Models\User::class);
+    }
 }

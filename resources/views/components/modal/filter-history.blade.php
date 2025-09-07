@@ -84,7 +84,8 @@
         </div>
 
         <div class="flex justify-end gap-1.5 mt-6">
-            <button type="submit" class="btn btn-primary btn-block">SET FILTER</button>
+            <a href="{{ route('history') }}" class="btn btn-outline flex-1">RESET FILTER</a>
+            <button type="submit" class="btn btn-primary flex-1">SET FILTER</button>
         </div>
     </form>
     <form method="dialog" class="modal-backdrop">

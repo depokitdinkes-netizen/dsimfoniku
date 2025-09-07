@@ -13,8 +13,6 @@ class DatabaseSeeder extends Seeder
     public function run(): void
     {
 
-
-        // Sample data sekolah
         
         // Run IKL inspection seeder
         $this->call([

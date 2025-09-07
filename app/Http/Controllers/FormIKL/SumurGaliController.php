@@ -44,7 +44,7 @@ class SumurGaliController extends Controller {
             Form::input('text', 'Kecamatan', 'kecamatan'),
             Form::input('text', 'Kelurahan', 'kelurahan'),
             Form::input('text', 'Nama Pemeriksa', 'nama-pemeriksa'),
-            Form::input('text', 'Instansi Pemeriksa', 'instansi-pemeriksa'),
+            Form::input('select', 'Instansi Pemeriksa', 'instansi-pemeriksa'),
             Form::input('date', 'Tanggal Penilaian', 'tanggal-penilaian'),
             Form::input('url', 'Upload Dokumen SLHS (Opsional)', 'dokumen_slhs'),
             Form::input('date', 'Tanggal Terbit SLHS (Opsional)', 'slhs_issued_date'),
@@ -200,6 +200,12 @@ class SumurGaliController extends Controller {
 
         $data = $request->all();
         
+        // Handle instansi-lainnya logic
+        if (isset($data['instansi-pemeriksa']) && $data['instansi-pemeriksa'] === 'Lainnya' && isset($data['instansi-lainnya'])) {
+            $data['instansi-pemeriksa'] = $data['instansi-lainnya'];
+            unset($data['instansi-lainnya']);
+        }
+        
         // Tambahkan user_id dari user yang sedang login
         $data['user_id'] = Auth::id();
         
@@ -262,6 +268,12 @@ class SumurGaliController extends Controller {
         ]);
 
         $data = $request->all();
+        
+        // Handle instansi-lainnya logic
+        if (isset($data['instansi-pemeriksa']) && $data['instansi-pemeriksa'] === 'Lainnya' && isset($data['instansi-lainnya'])) {
+            $data['instansi-pemeriksa'] = $data['instansi-lainnya'];
+            unset($data['instansi-lainnya']);
+        }
         
         // Auto-calculate SLHS expire date if issued date is provided
         if (isset($data['slhs_issued_date']) && $data['slhs_issued_date']) {

@@ -321,6 +321,11 @@ class TempatOlahragaController extends Controller
             // Tambahkan user_id dari user yang sedang login
             $data['user_id'] = Auth::id();
 
+            // Handle instansi-lainnya logic
+            if ($request->has('instansi-lainnya') && !empty($request->input('instansi-lainnya'))) {
+                $data['instansi-pemeriksa'] = $request->input('instansi-lainnya');
+            }
+
             $data['skor'] = (int) ((int) (array_reduce($this->formPenilaianName(), fn($carry, $column) => $carry + $request->input($column), 0) / 100 * 100));
 
             $insert = TempatOlahraga::create($data);
@@ -445,6 +450,11 @@ class TempatOlahragaController extends Controller
             ]);
 
             $data = $request->all();
+
+            // Handle instansi-lainnya logic
+            if ($request->has('instansi-lainnya') && !empty($request->input('instansi-lainnya'))) {
+                $data['instansi-pemeriksa'] = $request->input('instansi-lainnya');
+            }
 
             $data['skor'] = (int) ((int) (array_reduce($this->formPenilaianName(), fn($carry, $column) => $carry + $request->input($column), 0) / 100 * 100));
 

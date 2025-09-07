@@ -33,7 +33,7 @@ class KantinController extends Controller
             Form::input('number', 'Jumlah yang sudah mengikuti pelatihan dan mendapatkan sertifikat', 'u005'),
             Form::input('number', 'Nomor Izin Usaha (Opsional)', 'u006'),
             Form::input('text', 'Nama Pemeriksa', 'nama-pemeriksa'),
-            Form::input('text', 'Instansi Pemeriksa', 'instansi-pemeriksa'),
+            Form::input('select', 'Instansi Pemeriksa', 'instansi-pemeriksa'),
             Form::input('date', 'Tanggal Penilaian', 'tanggal-penilaian'),
             Form::input('url', 'Link Dokumen SLHS (Opsional)', 'dokumen_slhs'),
             Form::input('date', 'Tanggal Terbit SLHS (Opsional)', 'slhs_issued_date'),
@@ -382,6 +382,11 @@ class KantinController extends Controller
 
         $data = $request->all();
         
+        // Handle custom instansi pemeriksa input
+        if (!empty($request->input('instansi-lainnya'))) {
+            $data['instansi-pemeriksa'] = $request->input('instansi-lainnya');
+        }
+        
         // Tambahkan user_id dari user yang sedang login
         $data['user_id'] = Auth::id();
         $data['skor'] = (int) (100 - (array_reduce($this->formPenilaianName(), fn($carry, $column) => $carry + $request->input($column, 0)) / 51) * 100);
@@ -448,6 +453,12 @@ class KantinController extends Controller
         ]);
 
         $data = $request->all();
+        
+        // Handle custom instansi pemeriksa input
+        if (!empty($request->input('instansi-lainnya'))) {
+            $data['instansi-pemeriksa'] = $request->input('instansi-lainnya');
+        }
+        
         $file = $request->file('dokumen_slhs');
         if ($file) {
             $fileName = time() . '_' . uniqid() . '.' . $file->getClientOriginalExtension();

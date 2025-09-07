@@ -29,7 +29,7 @@ class PasarInternalController extends Controller {
             Form::input('number', 'Jumlah Total Pedagang', 'jumlah_total_pedagang'),
             Form::input('number', 'Jumlah Total Kios', 'jumlah_total_kios'),
             Form::input('text', 'Nama Pemeriksa', 'nama-pemeriksa'),
-            Form::input('text', 'Instansi Pemeriksa', 'instansi-pemeriksa'),
+            Form::input('select', 'Instansi Pemeriksa', 'instansi-pemeriksa'),
             Form::input('date', 'Tanggal Penilaian', 'tanggal-penilaian')
         ];
     }
@@ -303,6 +303,11 @@ class PasarInternalController extends Controller {
             // Add auth user ID
             $data['user_id'] = Auth::id();
 
+            // Handle instansi-lainnya logic
+            if ($request->has('instansi-lainnya') && !empty($request->input('instansi-lainnya'))) {
+                $data['instansi-pemeriksa'] = $request->input('instansi-lainnya');
+            }
+
             foreach ($this->formPenilaianName() as $column) {
                 $data[$column] = $request->input($column, '0');
             }
@@ -405,6 +410,11 @@ class PasarInternalController extends Controller {
             Log::info('Validation passed for Pasar Internal update');
 
             $data = $request->all();
+
+            // Handle instansi-lainnya logic
+            if ($request->has('instansi-lainnya') && !empty($request->input('instansi-lainnya'))) {
+                $data['instansi-pemeriksa'] = $request->input('instansi-lainnya');
+            }
 
             foreach ($this->formPenilaianName() as $column) {
                 $data[$column] = $request->input($column, '0');

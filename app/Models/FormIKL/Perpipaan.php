@@ -11,4 +11,9 @@ class Perpipaan extends Model {
 
     protected $table = "perpipaan";
     protected $guarded = ['id'];
+
+    public function user()
+    {
+        return $this->belongsTo(\App\Models\User::class);
+    }
 }

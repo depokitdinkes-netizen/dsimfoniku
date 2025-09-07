@@ -11,4 +11,12 @@ class Sekolah extends Model {
 
     protected $table = "sekolah";
     protected $guarded = ['id'];
+    
+    /**
+     * Relationship to User
+     */
+    public function user()
+    {
+        return $this->belongsTo(\App\Models\User::class);
+    }
 }

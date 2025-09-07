@@ -1126,8 +1126,9 @@ class PageController extends Controller {
             return redirect()->route('login');
         }
 
-        $page = $request->query('p', 1);
+        $page = (int) $request->query('p', 1);
 
+        // Handle data per page
         $dpp = $request->query('dpp');
         if ($dpp) {
             session()->put('dpp', $dpp);
@@ -1137,9 +1138,10 @@ class PageController extends Controller {
             session()->put('dpp', 5);
         }
 
+        // Get all inspections and apply filters
         $inspections = $this->inspectionResults()
             ->sortByDesc('updated_at')
-            ->when($request['s'], fn($items) => $items->filter(fn($item) => $item['name'] == $request['s']))
+            ->when($request['s'], fn($items) => $items->filter(fn($item) => stripos($item['name'], $request['s']) !== false))
             ->when($request['my'], fn($items) => $items->filter(fn($item) => Carbon::parse($item['date'])->format('Y-m') === $request['my']))
             ->when($request['ft'], fn($items) => $items->filter(fn($item) => in_array($item['form'], $request['ft'])))
             ->when($request['kec'], fn($items) => $items->filter(fn($item) => $item['kecamatan'] === $request['kec']))
@@ -1149,14 +1151,20 @@ class PageController extends Controller {
             ->values()->toArray();
 
         $total_records = count($inspections);
-        $total_pages = ceil($total_records / (int) session()->get('dpp'));
+        $dpp_value = (int) session()->get('dpp');
+        $total_pages = $total_records > 0 ? ceil($total_records / $dpp_value) : 1;
+
+        // Ensure page is within valid range
+        if ($page < 1) $page = 1;
+        if ($page > $total_pages) $page = $total_pages;
 
         return view('pages.history.index', [
             'page_name' => 'history',
-            'inspections' => array_slice($inspections, ($page - 1) * session()->get('dpp'), session()->get('dpp')),
-            'dpp' => session()->get('dpp') ? session()->get('dpp') : 5,
+            'inspections' => array_slice($inspections, ($page - 1) * $dpp_value, $dpp_value),
+            'dpp' => $dpp_value,
             'page_index' => $page,
             'total_pages' => $total_pages,
+            'total_records' => $total_records,
         ]);
     }
 
@@ -1164,7 +1172,7 @@ class PageController extends Controller {
         return view('pages.history.archived', [
             'page_name' => 'history',
             'inspections' => $this->archivedResults()->sortByDesc('updated_at')
-                ->when($request['s'], fn($items) => $items->filter(fn($item) => $item['name'] == $request['s']))
+                ->when($request['s'], fn($items) => $items->filter(fn($item) => stripos($item['name'], $request['s']) !== false))
         ]);
     }
 

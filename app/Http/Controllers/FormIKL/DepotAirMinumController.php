@@ -38,7 +38,7 @@ class DepotAirMinumController extends Controller
             Form::input('text', 'Lokasi/Tempat Sumber Air Baku', 'u007'),
             Form::input('number', 'Luas bangunan (m²)', 'u008'),
             Form::input('text', 'Nama Pemeriksa', 'nama-pemeriksa'),
-            Form::input('text', 'Instansi Pemeriksa', 'instansi-pemeriksa'),
+            Form::input('select', 'Instansi Pemeriksa', 'instansi-pemeriksa'),
             Form::input('select', 'Tujuan IKL', 'tujuan-ikl'),
             Form::input('date', 'Tanggal Penilaian', 'tanggal-penilaian'),
             Form::input('number', 'Kontak Pengelola', 'kontak'),
@@ -547,6 +547,11 @@ class DepotAirMinumController extends Controller
 
             $data = $request->all();
             
+            // Handle custom instansi pemeriksa input
+            if (!empty($request->input('instansi-lainnya'))) {
+                $data['instansi-pemeriksa'] = $request->input('instansi-lainnya');
+            }
+            
             $data['skor'] = (int) (100 - (array_reduce($this->formPenilaianName(), fn($carry, $column) => $carry + $request->input($column), 0) / 165) * 100);
 
             $insert = DepotAirMinum::create($data);
@@ -659,6 +664,11 @@ class DepotAirMinumController extends Controller
             }
 
             $data = $request->all();
+            
+            // Handle custom instansi pemeriksa input
+            if (!empty($request->input('instansi-lainnya'))) {
+                $data['instansi-pemeriksa'] = $request->input('instansi-lainnya');
+            }
             
             $data['skor'] = (int) (100 - (array_reduce($this->formPenilaianName(), fn($carry, $column) => $carry + $request->input($column), 0) / 165) * 100);
 

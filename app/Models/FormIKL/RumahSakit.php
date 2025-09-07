@@ -84,4 +84,9 @@ class RumahSakit extends Model {
             'pengisian-sikelim', 'alasan-sikelim',
             'pengisian-dsmiling', 'alasan-dsmiling',
         ];
+    
+    public function user()
+    {
+        return $this->belongsTo(\App\Models\User::class);
+    }
 }

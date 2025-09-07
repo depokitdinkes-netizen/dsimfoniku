@@ -27,7 +27,7 @@ class PasarController extends Controller {
             Form::input('select', 'Status Operasi', 'status-operasi'),
             Form::input('text', 'Titik GPS', 'koordinat'),
             Form::input('text', 'Nama Pemeriksa', 'nama-pemeriksa'),
-            Form::input('text', 'Instansi Pemeriksa', 'instansi-pemeriksa'),
+            Form::input('select', 'Instansi Pemeriksa', 'instansi-pemeriksa'),
             Form::input('date', 'Tanggal Penilaian', 'tanggal-penilaian')
         ];
     }
@@ -480,6 +480,11 @@ class PasarController extends Controller {
 
             $data = $request->all();
             
+            // Handle instansi-lainnya logic
+            if ($request->has('instansi-lainnya') && !empty($request->input('instansi-lainnya'))) {
+                $data['instansi-pemeriksa'] = $request->input('instansi-lainnya');
+            }
+            
             // Handle duplicate action BEFORE validation
             if ($request->input('action') == 'duplicate' && $request->input('original_id')) {
                 $original = Pasar::find($request->input('original_id'));
@@ -678,6 +683,11 @@ class PasarController extends Controller {
             Log::info('Validation passed for Pasar update');
 
             $data = $request->all();
+
+            // Handle instansi-lainnya logic
+            if ($request->has('instansi-lainnya') && !empty($request->input('instansi-lainnya'))) {
+                $data['instansi-pemeriksa'] = $request->input('instansi-lainnya');
+            }
 
             foreach ($this->formPenilaianName() as $column) {
                 $data[$column] = $request->input($column, '0');

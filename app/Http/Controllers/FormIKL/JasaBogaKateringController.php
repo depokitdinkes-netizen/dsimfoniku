@@ -29,7 +29,7 @@ class JasaBogaKateringController extends Controller
             Form::input('number', 'Jumlah yang sudah mengikuti pelatihan dan mendapatkan sertifikat', 'u005'),
             Form::input('number', 'Nomor Izin Usaha (Opsional)', 'u006'),
             Form::input('text', 'Nama Pemeriksa', 'nama-pemeriksa'),
-            Form::input('text', 'Instansi Pemeriksa', 'instansi-pemeriksa'),
+            Form::input('select', 'Instansi Pemeriksa', 'instansi-pemeriksa'),
             Form::input('select', 'Tujuan IKL', 'tujuan-ikl'),
             Form::input('date', 'Tanggal Penilaian', 'tanggal-penilaian'),
             Form::input('url', 'Link Dokumen SLHS (Opsional)', 'dokumen_slhs'),
@@ -1169,7 +1169,12 @@ class JasaBogaKateringController extends Controller
 
         $data = $request->all();
         
+        // Handle instansi lainnya
+        if ($request->input('instansi-pemeriksa') === 'Lainnya' && $request->filled('instansi-lainnya')) {
+            $data['instansi-pemeriksa'] = $request->input('instansi-lainnya');
+        }
 
+        
         
         // Tambahkan user_id dari user yang sedang login
         $data['user_id'] = Auth::id();
@@ -1356,6 +1361,11 @@ class JasaBogaKateringController extends Controller
         ]);
         
         $data = $request->all();
+        
+        // Handle instansi lainnya
+        if ($request->input('instansi-pemeriksa') === 'Lainnya' && $request->filled('instansi-lainnya')) {
+            $data['instansi-pemeriksa'] = $request->input('instansi-lainnya');
+        }
         
         // Handle file upload if present
         if ($request->hasFile('dokumen_slhs')) {

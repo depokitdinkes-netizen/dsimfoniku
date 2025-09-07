@@ -11,4 +11,9 @@ class DepotAirMinum extends Model {
 
     protected $table = "depot_air_minum";
     protected $guarded = ['id'];
+
+    public function user()
+    {
+        return $this->belongsTo(\App\Models\User::class);
+    }
 }

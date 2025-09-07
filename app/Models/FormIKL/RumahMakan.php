@@ -11,4 +11,12 @@ class RumahMakan extends Model {
 
     protected $table = "rumah_makan";
     protected $guarded = ['id'];
+    
+    /**
+     * Relationship to User
+     */
+    public function user()
+    {
+        return $this->belongsTo(\App\Models\User::class);
+    }
 }

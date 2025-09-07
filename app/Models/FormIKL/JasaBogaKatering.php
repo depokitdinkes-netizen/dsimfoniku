@@ -11,4 +11,12 @@ class JasaBogaKatering extends Model {
 
     protected $table = "jasa_boga_katering";
     protected $guarded = ['id'];
+    
+    /**
+     * Relationship to User
+     */
+    public function user()
+    {
+        return $this->belongsTo(\App\Models\User::class);
+    }
 }

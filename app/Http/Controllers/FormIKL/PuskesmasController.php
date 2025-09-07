@@ -31,7 +31,7 @@ class PuskesmasController extends Controller
             Form::input('number', 'Jumlah Karyawan', 'u004'),
             Form::input('number', 'Nomor ID Puskesmas', 'u005'),
             Form::input('text', 'Nama Pemeriksa', 'nama-pemeriksa'),
-            Form::input('text', 'Instansi Pemeriksa', 'instansi-pemeriksa'),
+            Form::input('select', 'Instansi Pemeriksa', 'instansi-pemeriksa'),
             Form::input('date', 'Tanggal Penilaian', 'tanggal-penilaian'),
             Form::input('select', 'Status Operasi', 'status-operasi'),
             Form::input('number', 'Kontak Yang Dapat Dihubungi', 'kontak'),
@@ -583,6 +583,12 @@ class PuskesmasController extends Controller
 
             $data = $request->all();
 
+            // Handle instansi-lainnya logic
+            if (isset($data['instansi-pemeriksa']) && $data['instansi-pemeriksa'] === 'Lainnya' && isset($data['instansi-lainnya'])) {
+                $data['instansi-pemeriksa'] = $data['instansi-lainnya'];
+                unset($data['instansi-lainnya']);
+            }
+
             $data['skor'] = (int) (array_reduce($this->formPenilaianName(), fn($carry, $column) => $carry + $request->input($column), 0) / 117 * 100);
 
             $insert = Puskesmas::create($data);
@@ -697,6 +703,12 @@ class PuskesmasController extends Controller
             ]);
 
             $data = $request->all();
+
+            // Handle instansi-lainnya logic
+            if (isset($data['instansi-pemeriksa']) && $data['instansi-pemeriksa'] === 'Lainnya' && isset($data['instansi-lainnya'])) {
+                $data['instansi-pemeriksa'] = $data['instansi-lainnya'];
+                unset($data['instansi-lainnya']);
+            }
 
             $data['skor'] = (int) (array_reduce($this->formPenilaianName(), fn($carry, $column) => $carry + $request->input($column), 0) / 117 * 100);
 

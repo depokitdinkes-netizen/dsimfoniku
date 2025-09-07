@@ -32,7 +32,7 @@ class GeraiJajananKelilingController extends Controller
             Form::input('text', 'Rute Berjualan', 'u006'),
             Form::input('number', 'Nomor Induk Berusaha (Opsional)', 'u007'),
             Form::input('text', 'Nama Pemeriksa', 'nama-pemeriksa'),
-            Form::input('text', 'Instansi Pemeriksa', 'instansi-pemeriksa'),
+            Form::input('select', 'Instansi Pemeriksa', 'instansi-pemeriksa'),
             Form::input('date', 'Tanggal Penilaian', 'tanggal-penilaian'),
             Form::input('file', 'Upload Dokumen SLHS (Opsional)', 'dokumen_slhs'),
             Form::input('date', 'Tanggal Terbit SLHS (Opsional)', 'slhs_issued_date'),
@@ -340,7 +340,11 @@ class GeraiJajananKelilingController extends Controller
 
         $data = $request->all();
 
-
+        // Handle instansi-lainnya logic
+        if (isset($data['instansi-pemeriksa']) && $data['instansi-pemeriksa'] === 'Lainnya' && isset($data['instansi-lainnya'])) {
+            $data['instansi-pemeriksa'] = $data['instansi-lainnya'];
+            unset($data['instansi-lainnya']);
+        }
 
         if ($data['u011'] != 'A1' && $data['u011'] != 'A2') {
             return redirect(route('gerai-jajanan-keliling.create'))->with('error', 'tidak ada gerai pangan jajanan keliling dengan golongan tersebut');
@@ -423,6 +427,12 @@ class GeraiJajananKelilingController extends Controller
         ]);
 
         $data = $request->all();
+
+        // Handle instansi-lainnya logic
+        if (isset($data['instansi-pemeriksa']) && $data['instansi-pemeriksa'] === 'Lainnya' && isset($data['instansi-lainnya'])) {
+            $data['instansi-pemeriksa'] = $data['instansi-lainnya'];
+            unset($data['instansi-lainnya']);
+        }
 
         // Handle duplicate action
         if ($request->input('action') == 'duplicate' && $request->input('original_id')) {

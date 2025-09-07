@@ -34,7 +34,7 @@ class RenangPemandianController extends Controller
             Form::input('number', 'Kontak Pengelola', 'kontak'),
             Form::input('text', 'Titik GPS', 'koordinat'),
             Form::input('text', 'Nama Pemeriksa', 'nama-pemeriksa'),
-            Form::input('text', 'Instansi Pemeriksa', 'instansi-pemeriksa'),
+            Form::input('select', 'Instansi Pemeriksa', 'instansi-pemeriksa'),
             Form::input('date', 'Tanggal Penilaian', 'tanggal-penilaian')];
     }
 
@@ -342,6 +342,11 @@ class RenangPemandianController extends Controller
             // Tambahkan user_id dari user yang sedang login
             $data['user_id'] = Auth::id();
             
+            // Handle instansi-lainnya logic
+            if ($request->has('instansi-lainnya') && !empty($request->input('instansi-lainnya'))) {
+                $data['instansi-pemeriksa'] = $request->input('instansi-lainnya');
+            }
+            
             $data['skor'] = (int) ((int) (array_reduce($this->formPenilaianName(), fn($carry, $column) => $carry + $request->input($column), 0) / 100 * 100));
 
             $insert = RenangPemandian::create($data);
@@ -466,6 +471,11 @@ class RenangPemandianController extends Controller
 
             $data = $request->all();
             $data['skor'] = (int) ((int) (array_reduce($this->formPenilaianName(), fn($carry, $column) => $carry + $request->input($column), 0) / 100 * 100));
+
+            // Handle instansi-lainnya logic
+            if ($request->has('instansi-lainnya') && !empty($request->input('instansi-lainnya'))) {
+                $data['instansi-pemeriksa'] = $request->input('instansi-lainnya');
+            }
 
             if ($data['action'] == 'duplicate') {
                 // Add user_id for duplicate action

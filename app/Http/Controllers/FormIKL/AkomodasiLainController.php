@@ -37,7 +37,7 @@ class AkomodasiLainController extends Controller
             Form::input('number', 'Kontak Pengelola', 'kontak'),
             Form::input('text', 'Titik GPS', 'koordinat'),
             Form::input('text', 'Nama Pemeriksa', 'nama-pemeriksa'),
-            Form::input('text', 'Instansi Pemeriksa', 'instansi-pemeriksa'),
+            Form::input('select', 'Instansi Pemeriksa', 'instansi-pemeriksa'),
             Form::input('date', 'Tanggal Penilaian', 'tanggal-penilaian')];
     }
 
@@ -341,6 +341,11 @@ class AkomodasiLainController extends Controller
             // Tambahkan user_id dari user yang sedang login
             $data['user_id'] = Auth::id();
             
+            // Handle instansi-lainnya logic
+            if ($request->has('instansi-lainnya') && !empty($request->input('instansi-lainnya'))) {
+                $data['instansi-pemeriksa'] = $request->input('instansi-lainnya');
+            }
+            
             // Auto-calculate expire date from issued date + 3 years
             if (!empty($data['sls_issued_date'])) {
                 $issuedDate = \Carbon\Carbon::parse($data['sls_issued_date']);
@@ -474,6 +479,11 @@ class AkomodasiLainController extends Controller
             ]);
 
             $data = $request->all();
+            
+            // Handle instansi-lainnya logic
+            if ($request->has('instansi-lainnya') && !empty($request->input('instansi-lainnya'))) {
+                $data['instansi-pemeriksa'] = $request->input('instansi-lainnya');
+            }
             
             // Auto-calculate expire date from issued date + 3 years
             if (!empty($data['sls_issued_date'])) {

@@ -11,4 +11,9 @@ class TempatRekreasi extends Model {
 
     protected $table = "tempat_rekreasi";
     protected $guarded = ['id'];
+
+    public function user()
+    {
+        return $this->belongsTo(\App\Models\User::class);
+    }
 }

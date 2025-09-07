@@ -42,7 +42,7 @@ class RumahSakitController extends Controller
             Form::input('text', 'Nama Penanggung Jawab Kesehatan Lingkungan Rumah Sakit', 'pengelola'),
             Form::input('number', 'Kontak Penanggung Jawab Kesehatan Lingkungan Rumah Sakit', 'kontak'),
             Form::input('text', 'Nama Pemeriksa', 'nama-pemeriksa'),
-            Form::input('text', 'Instansi Pemeriksa', 'instansi-pemeriksa'),
+            Form::input('select', 'Instansi Pemeriksa', 'instansi-pemeriksa'),
             Form::input('date', 'Tanggal Penilaian', 'tanggal-penilaian'),
             Form::selects('status-operasi', 1, 'Status Operasi', [
                 Form::option(1, 'Aktif Operasi'),
@@ -539,6 +539,13 @@ class RumahSakitController extends Controller
             ]);
 
             $data = $request->all();
+            
+            // Handle instansi-lainnya logic
+            if (isset($data['instansi-pemeriksa']) && $data['instansi-pemeriksa'] === 'Lainnya' && isset($data['instansi-lainnya'])) {
+                $data['instansi-pemeriksa'] = $data['instansi-lainnya'];
+                unset($data['instansi-lainnya']);
+            }
+            
             // Add user ID
             $data['user_id'] = Auth::id();
 
@@ -790,6 +797,12 @@ class RumahSakitController extends Controller
             if ($request->input('action') == 'duplicate') {
                 // For duplicate, get all data from request like RestoranController
                 $data = $request->all();
+                
+                // Handle instansi-lainnya logic
+                if (isset($data['instansi-pemeriksa']) && $data['instansi-pemeriksa'] === 'Lainnya' && isset($data['instansi-lainnya'])) {
+                    $data['instansi-pemeriksa'] = $data['instansi-lainnya'];
+                    unset($data['instansi-lainnya']);
+                }
                 
                 // Add user ID for duplicate action
                 $data['user_id'] = Auth::id();

@@ -11,4 +11,9 @@ class SumurGali extends Model {
 
     protected $table = "sumur_gali";
     protected $guarded = ['id'];
+
+    public function user()
+    {
+        return $this->belongsTo(\App\Models\User::class);
+    }
 }

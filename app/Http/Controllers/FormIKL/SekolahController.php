@@ -34,7 +34,7 @@ class SekolahController extends Controller
             Form::input('text', 'Titik GPS', 'koordinat'),
             Form::input('select', 'Status Operasi', 'status-operasi'),
             Form::input('text', 'Nama Pemeriksa', 'nama-pemeriksa'),
-            Form::input('text', 'Instansi Pemeriksa', 'instansi-pemeriksa'),
+            Form::input('select', 'Instansi Pemeriksa', 'instansi-pemeriksa'),
             Form::input('date', 'Tanggal Penilaian', 'tanggal-penilaian')];
     }
 
@@ -435,6 +435,11 @@ class SekolahController extends Controller
 
             $data = $request->all();
             
+            // Handle instansi lainnya
+            if ($request->input('instansi-pemeriksa') === 'Lainnya' && $request->filled('instansi-lainnya')) {
+                $data['instansi-pemeriksa'] = $request->input('instansi-lainnya');
+            }
+            
             // Handle duplicate action
             if ($request->input('action') == 'duplicate' && $request->input('original_id')) {
                 $original = Sekolah::find($request->input('original_id'));
@@ -643,6 +648,11 @@ class SekolahController extends Controller
             Log::info('Validation passed');
             
             $data = $request->all();
+            
+            // Handle instansi lainnya
+            if ($request->input('instansi-pemeriksa') === 'Lainnya' && $request->filled('instansi-lainnya')) {
+                $data['instansi-pemeriksa'] = $request->input('instansi-lainnya');
+            }
 
             foreach ($this->formPenilaianName() as $column) {
                 $data[$column] = $request->input($column, '0');
