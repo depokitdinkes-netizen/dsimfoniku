@@ -66,7 +66,7 @@
                 @default
                 <div class="input-group">
                     <label for="{{ $form_input['name'] }}">{{ $form_input['label'] }}</label>
-                    <input type="{{ $form_input['type'] }}" id="{{ $form_input['name'] }}" name="{{ $form_input['name'] }}" value="{{ old($form_input['name'], $form_data[$form_input['name']] ?? '') }}" @if(in_array($form_input['name'], ['subjek', 'alamat', 'kecamatan', 'kelurahan', 'pengelola', 'jumlah_total_pedagang', 'jumlah_total_kios'])) required @endif />
+                    <input type="{{ $form_input['type'] }}" id="{{ $form_input['name'] }}" name="{{ $form_input['name'] }}" value="{{ old($form_input['name'], $form_data[$form_input['name']] ?? '') }}" @if(in_array($form_input['name'], ['subjek', 'alamat', 'kecamatan', 'kelurahan', 'pengelola', 'kontak', 'jumlah_total_pedagang', 'jumlah_total_kios'])) required @endif />
                     @error($form_input['name'])
                         <span class="text-red-500 text-sm">{{ $message }}</span>
                     @enderror

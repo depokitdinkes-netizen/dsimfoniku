@@ -293,6 +293,7 @@ class PasarInternalController extends Controller {
                 'kecamatan' => 'required|string|max:255',
                 'kelurahan' => 'required|string|max:255',
                 'pengelola' => 'required|string|max:255',
+                'kontak' => 'required|string|max:20',
                 'jumlah_total_pedagang' => 'required|integer|min:1',
                 'jumlah_total_kios' => 'required|integer|min:1',
             ]);
@@ -403,6 +404,7 @@ class PasarInternalController extends Controller {
                 'kecamatan' => 'required|string|max:255',
                 'kelurahan' => 'required|string|max:255',
                 'pengelola' => 'required|string|max:255',
+                'kontak' => 'required|string|max:20',
                 'jumlah_total_pedagang' => 'required|integer|min:1',
                 'jumlah_total_kios' => 'required|integer|min:1',
             ]);

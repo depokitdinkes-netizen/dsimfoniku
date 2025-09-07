@@ -66,7 +66,7 @@
                 @default
                 <div class="input-group">
                     <label for="{{ $form_input['name'] }}">{{ $form_input['label'] }}</label>
-                    <input type="{{ $form_input['type'] }}" id="{{ $form_input['name'] }}" name="{{ $form_input['name'] }}" required />
+                    <input type="{{ $form_input['type'] }}" id="{{ $form_input['name'] }}" name="{{ $form_input['name'] }}" @if(in_array($form_input['name'], ['subjek', 'alamat', 'kecamatan', 'kelurahan', 'pengelola', 'kontak', 'jumlah_total_pedagang', 'jumlah_total_kios'])) required @endif />
                 </div>
                 @endswitch
 
